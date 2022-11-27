@@ -1,5 +1,5 @@
 from firebase import create_collection
-
+# from category import cat
 def findstring(str):
     for word in str:
         x = word.find('on')
