@@ -17,7 +17,11 @@ li = ["Dear SBI User, your A/c X4954-debited by Rs50.0 on 19Nov22 transfer to Du
 "Dear SBI User, your A/c X4954-debited by Rs65.0 on 19Nov22 transfer to Dunzo Digital Ref No 232316221258. If not done by u, fwd this SMS to 9223008333/Call 1800111109 or 09449112211 to block UPI -SBI",
 "Dear SBI User, your A/c X4954-debited by Rs650.0 on 19Nov22 transfer to Dunzo Digital Ref No 232316221258. If not done by u, fwd this SMS to 9223008333/Call 1800111109 or 09449112211 to block UPI -SBI",
 "Dear SBI User, your A/c X4954-debited by Rs1000.0 on 19Nov22 transfer to easemytrip Digital Ref No 232316221258. If not done by u, fwd this SMS to 9223008333/Call 1800111109 or 09449112211 to block UPI -SBI",
-"Dear SBI User, your A/c X4954-debited by Rs6550.0 on 19Nov22 transfer to zomato Digital Ref No 232316221258. If not done by u, fwd this SMS to 9223008333/Call 1800111109 or 09449112211 to block UPI -SBI"]
+"Dear SBI User, your A/c X4954-debited by Rs6550.0 on 19Nov22 transfer to zomato Digital Ref No 232316221258. If not done by u, fwd this SMS to 9223008333/Call 1800111109 or 09449112211 to block UPI -SBI",
+"Dear SBI User, your A/c X4954-debited by Rs2000.0 on 19Nov22 transfer to easemytrip Digital Ref No 232316221258. If not done by u, fwd this SMS to 9223008333/Call 1800111109 or 09449112211 to block UPI -SBI",
+"Dear SBI User, your A/c X4954-debited by Rs8000.0 on 19Nov22 transfer to zomato Digital Ref No 232316221258. If not done by u, fwd this SMS to 9223008333/Call 1800111109 or 09449112211 to block UPI -SBI",
+"Dear SBI User, your A/c X4954-debited by Rs2000.0 on 19Nov22 transfer to easemytrip Digital Ref No 232316221258. If not done by u, fwd this SMS to 9223008333/Call 1800111109 or 09449112211 to block UPI -SBI",
+"Dear SBI User, your A/c X4954-debited by Rs10000.0 on 19Nov22 transfer to zomato Digital Ref No 232316221258. If not done by u, fwd this SMS to 9223008333/Call 1800111109 or 09449112211 to block UPI -SBI"]
 
 @app.get('/signup')
 async def status():
@@ -46,5 +50,11 @@ async def predict():
     #     amount.append(d[2])
     # x=arima_prediction(date,amount)
     # df=pd.read_csv('Electric_Production.csv')
-    return arima_prediction()
+    doc=db.collection("Email").document("Predictions_of_next_month").collection("Predictions").get()
+    if len(doc)>0:
+        y=db.collection("Email").document("Predictions_of_next_month").collection("Predictions").document('Prediction').get()
+        ans=list(y.to_dict().values())
+        return ans[0]
+    x=arima_prediction()
     # return x
+    db.collection("Email").document("Predictions_of_next_month").collection("Predictions").document('Prediction').set({'Prediction':x})

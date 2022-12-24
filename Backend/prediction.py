@@ -26,15 +26,15 @@ def arima_prediction():
         flag=1
     d=d+1
     while flag==0:
-        r=adf_test(df['Production']-df['Production'].shift(d))
+        r=adf_test((df['Production']-df['Production'].shift(d)).dropna())
         if(r<=0.5): break
         d=d+1
     train=df[:new_x]
     test=df[new_x:]
 
     score=10000000
-    new_p=-1
-    new_q=-1
+    new_p=0
+    new_q=0
     p=[1,2,3,4,5,6,7,8]
     q=[1,2,3,4,5,6,7,8]
     for i in p:

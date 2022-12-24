@@ -3,7 +3,6 @@ from firebase_admin import credentials
 from firebase_admin import firestore
 db=firestore.client()
 
-
 def cat(str):
     sumFood=0
     sumTravel=0
@@ -12,9 +11,10 @@ def cat(str):
     amount=0
     docs=db.collection(str).document("Transactions").collection("Transaction").get()
     for doc in docs:
-        d=list(doc.to_dict().values())
-        amount=d[2]
-        category=d[0]
+        # d=list(doc.to_dict().values())
+        d=doc.to_dict()
+        amount=d.get('Amount')
+        category=d.get('To')
         food = ['zomato','swiggy','eatsure','eatclub','dominos','pizzahut','ovenstory','mcdonalds','burger king','mojo pizza','fasoos','kaggis','kfc']
         travel = ['makemytrip','goibibo','easemytrip','indigo','airasia','spicejet','airindia','gofirst','ola','uber','rapido']
         ecommerce = ['dunzo','amazon','flipkart','myntra','bigbasket','dmart','bookmyshow']
