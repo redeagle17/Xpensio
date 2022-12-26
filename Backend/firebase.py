@@ -6,8 +6,8 @@ cred = credentials.Certificate("serviceAccountKey.json")
 firebase_admin.initialize_app(cred)
 db=firestore.client()
 
-def create_collection(li):
-    db.collection("Email").document("Transactions").collection("Transaction").document().set({"Date":li[1],"To":li[0],"Amount":float(li[2])})
+def create_collection(li,q):
+    db.collection(q).document("Transactions").collection("Transaction").document().set({"Date":li[1],"To":li[0],"Amount":float(li[2])})
 # def solve():
 #     date=[]
 #     amount=[]

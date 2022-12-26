@@ -19,24 +19,29 @@ li = ["Dear SBI User, your A/c X4954-debited by Rs50.0 on 19Nov22 transfer to Du
 "Dear SBI User, your A/c X4954-debited by Rs1000.0 on 19Nov22 transfer to easemytrip Digital Ref No 232316221258. If not done by u, fwd this SMS to 9223008333/Call 1800111109 or 09449112211 to block UPI -SBI",
 "Dear SBI User, your A/c X4954-debited by Rs6550.0 on 19Nov22 transfer to zomato Digital Ref No 232316221258. If not done by u, fwd this SMS to 9223008333/Call 1800111109 or 09449112211 to block UPI -SBI",
 "Dear SBI User, your A/c X4954-debited by Rs2000.0 on 19Nov22 transfer to easemytrip Digital Ref No 232316221258. If not done by u, fwd this SMS to 9223008333/Call 1800111109 or 09449112211 to block UPI -SBI",
-"Dear SBI User, your A/c X4954-debited by Rs8000.0 on 19Nov22 transfer to zomato Digital Ref No 232316221258. If not done by u, fwd this SMS to 9223008333/Call 1800111109 or 09449112211 to block UPI -SBI",
-"Dear SBI User, your A/c X4954-debited by Rs2000.0 on 19Nov22 transfer to easemytrip Digital Ref No 232316221258. If not done by u, fwd this SMS to 9223008333/Call 1800111109 or 09449112211 to block UPI -SBI",
-"Dear SBI User, your A/c X4954-debited by Rs10000.0 on 19Nov22 transfer to zomato Digital Ref No 232316221258. If not done by u, fwd this SMS to 9223008333/Call 1800111109 or 09449112211 to block UPI -SBI"]
+"Dear SBI User, your A/c X4954-debited by Rs10000.0 on 19Nov22 transfer to zomato Digital Ref No 232316221258. If not done by u, fwd this SMS to 9223008333/Call 1800111109 or 09449112211 to block UPI -SBI",
+"Dear SBI User, your A/c X4954-debited by Rs20000.0 on 19Nov22 transfer to zomato Digital Ref No 232316221258. If not done by u, fwd this SMS to 9223008333/Call 1800111109 or 09449112211 to block UPI -SBI",
+"Dear SBI User, your A/c X4954-debited by Rs20000.0 on 19Nov22 transfer to easemytrip Digital Ref No 232316221258. If not done by u, fwd this SMS to 9223008333/Call 1800111109 or 09449112211 to block UPI -SBI"]
 
 @app.get('/signup')
-async def status():
-    db.collection("Email").document("Message List").collection("List").document('List').set({'list':li})
-    findstring(li)
-    x=cat("Email")
+async def status(q:str):
+    db.collection(q).document("Message List").collection("List").document('List').set({'list':li})
+    findstring(li,q)
+    x=cat(q)
     return x
 
 @app.get('/login')
-async def login():
-    old=db.collection("Email").document("Message List").collection("List").get()
-    new_list=(list(set(li) - set(old)))
-    db.collection("Email").document("Message List").collection("List").document('List').set({'list':li})
-    findstring(new_list)
-    x=cat("Email")
+async def login(q:str):
+    old=db.collection(q).document("Message List").collection("List").get()
+    new_list=[]
+    for i in old:
+        j=list(i.to_dict().values())
+        new_list.append(j[0])
+    new_li=new_list[0]
+    ans_list=(list(set(li) - set(new_li)))
+    db.collection(q).document("Message List").collection("List").document('List').set({'list':li})
+    findstring(ans_list,q)
+    x=cat(q)
     return x
 
 @app.get('/predict')

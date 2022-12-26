@@ -1,6 +1,6 @@
 from firebase import create_collection
 # from category import cat
-def findstring(str):
+def findstring(str,q):
     for word in str:
         x = word.find('on')
         y = word.find('to')
@@ -23,4 +23,4 @@ def findstring(str):
         while word[m]!=' ':
             ans3 = ans3 + word[m]
             m += 1
-        create_collection([ans2,ans1,ans3])
+        create_collection([ans1,ans2,ans3],q)
